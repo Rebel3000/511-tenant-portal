@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tenant Portal — 511 Mount Lubentia Ct</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy:   #1E3A5F;
+    --blue:   #2E75B6;
+    --slate:  #4A6FA5;
+    --mint:   #E8F5E9;
+    --mint2:  #2E7D32;
+    --warm:   #FFFDF7;
+    --text:   #1A1A2E;
+    --muted:  #6B7A8D;
+    --border: #DDE3EC;
+    --red:    #C62828;
+    --red-bg: #FFEBEE;
+    --yellow: #F57F17;
+    --yellow-bg: #FFFDE7;
+    --card:   #FFFFFF;
+    --radius: 12px;
+    --shadow: 0 2px 12px rgba(30,58,95,0.08);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--warm);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* ── TOP HEADER ── */
+  .site-header {
+    background: var(--navy);
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  }
+  .site-header .logo {
+    font-family: 'DM Serif Display', serif;
+    font-size: 18px;
+    color: #fff;
+    line-height: 1.2;
+  }
+  .site-header .logo span {
+    display: block;
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.6);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+  .tenant-badge {
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 6px 12px;
+    border-radius: 20px;
+  }
+
+  /* ── NAV TABS ── */
+  .tab-nav {
+    background: var(--navy);
+    display: flex;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .tab-nav::-webkit-scrollbar { display: none; }
+  .tab-btn {
+    flex: 1;
+    min-width: 80px;
+    padding: 12px 8px;
+    background: none;
+    border: none;
+    color: rgba(255,255,255,0.55);
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    transition: color 0.2s, border-bottom 0.2s;
+    border-bottom: 3px solid transparent;
+    white-space: nowrap;
+  }
+  .tab-btn .icon { font-size: 18px; }
+  .tab-btn.active {
+    color: #fff;
+    border-bottom-color: #2E75B6;
+  }
+  .tab-btn:hover { color: rgba(255,255,255,0.85); }
+
+  /* ── CONTENT AREA ── */
+  .content { max-width: 640px; margin: 0 auto; padding: 20px 16px 40px; }
+
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* ── CARDS ── */
+  .card {
+    background: var(--card);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 20px;
+    margin-bottom: 16px;
+    border: 1px solid var(--border);
+  }
+  .card-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 20px;
+    color: var(--navy);
+    margin-bottom: 4px;
+  }
+  .card-sub {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 16px;
+  }
+
+  /* ── RENT STATUS CARD ── */
+  .rent-status {
+    background: linear-gradient(135deg, var(--navy) 0%, #2E75B6 100%);
+    border-radius: var(--radius);
+    padding: 24px 20px;
+    margin-bottom: 16px;
+    color: #fff;
+    position: relative;
+    overflow: hidden;
+  }
+  .rent-status::before {
+    content: '';
+    position: absolute;
+    top: -30px; right: -30px;
+    width: 120px; height: 120px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 50%;
+  }
+  .rent-status .month-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.65);
+    margin-bottom: 6px;
+  }
+  .rent-status .amount {
+    font-family: 'DM Serif Display', serif;
+    font-size: 42px;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+  .rent-status .due-label {
+    font-size: 13px;
+    color: rgba(255,255,255,0.75);
+  }
+  .rent-status .due-label strong { color: #fff; }
+  .status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 14px;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+  }
+  .status-pill.due { background: rgba(245,127,23,0.25); color: #FFD54F; }
+  .status-pill.paid { background: rgba(46,125,50,0.3); color: #A5D6A7; }
+  .status-pill.late { background: rgba(198,40,40,0.3); color: #EF9A9A; }
+  .status-dot { width: 8px; height: 8px; border-radius: 50%; }
+  .status-pill.due .status-dot { background: #FFD54F; }
+  .status-pill.paid .status-dot { background: #A5D6A7; }
+  .status-pill.late .status-dot { background: #EF9A9A; }
+
+  /* countdown */
+  .countdown {
+    display: flex;
+    gap: 12px;
+    margin-top: 16px;
+  }
+  .countdown-block {
+    text-align: center;
+    background: rgba(255,255,255,0.12);
+    border-radius: 8px;
+    padding: 8px 14px;
+    min-width: 56px;
+  }
+  .countdown-block .num {
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 1;
+  }
+  .countdown-block .lbl {
+    font-size: 10px;
+    color: rgba(255,255,255,0.6);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-top: 2px;
+  }
+
+  /* ── ACH INSTRUCTIONS ── */
+  .ach-box {
+    background: #F0F4FA;
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--blue);
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 16px;
+  }
+  .ach-box .ach-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .ach-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 14px;
+  }
+  .ach-row:last-child { border-bottom: none; }
+  .ach-row .ach-key { color: var(--muted); font-size: 12px; }
+  .ach-row .ach-val { font-weight: 600; font-family: 'Courier New', monospace; }
+  .copy-btn {
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 3px 8px;
+    font-size: 11px;
+    color: var(--blue);
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+  }
+  .copy-btn:hover { background: var(--border); }
+
+  /* ── WATER BILL SECTION ── */
+  .water-badge {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #E3F2FD;
+    border: 1px solid #90CAF9;
+    border-radius: 8px;
+    padding: 14px 16px;
+    margin-bottom: 16px;
+  }
+  .water-badge .water-icon { font-size: 24px; }
+  .water-badge .water-info { flex: 1; }
+  .water-badge .water-info .wlabel { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
+  .water-badge .water-info .wamt { font-size: 20px; font-weight: 700; color: var(--navy); }
+
+  /* ── BUTTONS ── */
+  .btn {
+    display: block;
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: 10px;
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+  }
+  .btn-primary {
+    background: var(--blue);
+    color: #fff;
+  }
+  .btn-primary:hover { background: var(--navy); transform: translateY(-1px); }
+  .btn-secondary {
+    background: transparent;
+    color: var(--blue);
+    border: 2px solid var(--blue);
+    margin-top: 10px;
+  }
+  .btn-secondary:hover { background: #EBF3FB; }
+  .btn-danger { background: var(--red); color: #fff; margin-top: 10px; }
+
+  /* ── CONFIRM MODAL ── */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 200;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: #fff;
+    border-radius: var(--radius);
+    padding: 28px 24px;
+    max-width: 400px;
+    width: 100%;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+  }
+  .modal h3 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 22px;
+    color: var(--navy);
+    margin-bottom: 8px;
+  }
+  .modal p { font-size: 14px; color: var(--muted); margin-bottom: 20px; line-height: 1.6; }
+  .modal .modal-amount {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--navy);
+    text-align: center;
+    margin: 16px 0;
+  }
+  .modal .modal-btns { display: flex; gap: 10px; }
+  .modal .modal-btns .btn { flex: 1; }
+
+  /* ── SUCCESS STATE ── */
+  .success-banner {
+    display: none;
+    background: var(--mint);
+    border: 1px solid #A5D6A7;
+    border-radius: 10px;
+    padding: 16px;
+    text-align: center;
+    margin-bottom: 16px;
+  }
+  .success-banner.show { display: block; }
+  .success-banner .success-icon { font-size: 32px; margin-bottom: 8px; }
+  .success-banner .success-title { font-weight: 700; color: var(--mint2); font-size: 16px; }
+  .success-banner .success-sub { font-size: 13px; color: #388E3C; margin-top: 4px; }
+
+  /* ── FORM ELEMENTS ── */
+  .form-group { margin-bottom: 16px; }
+  .form-group label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 6px;
+  }
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    color: var(--text);
+    background: #fff;
+    transition: border-color 0.2s;
+    outline: none;
+  }
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus { border-color: var(--blue); }
+  .form-group textarea { resize: vertical; min-height: 100px; }
+
+  /* Priority badges */
+  .priority { display: inline-block; padding: 3px 10px; border-radius: 12px; font-size: 11px; font-weight: 600; }
+  .priority.urgent { background: var(--red-bg); color: var(--red); }
+  .priority.normal { background: var(--yellow-bg); color: var(--yellow); }
+  .priority.low { background: var(--mint); color: var(--mint2); }
+
+  /* ── HISTORY TABLE ── */
+  .history-row {
+    display: flex;
+    align-items: center;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+    gap: 12px;
+  }
+  .history-row:last-child { border-bottom: none; }
+  .history-icon {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+  .history-icon.rent { background: #E3F2FD; }
+  .history-icon.water { background: #E0F7FA; }
+  .history-icon.deposit { background: #F3E5F5; }
+  .history-info { flex: 1; }
+  .history-info .h-label { font-size: 14px; font-weight: 600; color: var(--text); }
+  .history-info .h-date { font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .history-amount { font-size: 16px; font-weight: 700; color: var(--navy); font-family: 'Courier New', monospace; }
+  .history-badge {
+    font-size: 10px;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 10px;
+    background: var(--mint);
+    color: var(--mint2);
+  }
+
+  /* ── NOTICES ── */
+  .notice-card {
+    border-radius: 10px;
+    padding: 16px;
+    margin-bottom: 12px;
+    border-left: 4px solid;
+  }
+  .notice-card.info { background: #E3F2FD; border-color: #2196F3; }
+  .notice-card.warning { background: var(--yellow-bg); border-color: var(--yellow); }
+  .notice-card.urgent { background: var(--red-bg); border-color: var(--red); }
+  .notice-card .notice-date { font-size: 11px; color: var(--muted); margin-bottom: 4px; }
+  .notice-card .notice-title { font-weight: 700; font-size: 14px; margin-bottom: 6px; }
+  .notice-card.warning .notice-title { color: var(--yellow); }
+  .notice-card.urgent .notice-title { color: var(--red); }
+  .notice-card .notice-body { font-size: 13px; color: var(--text); line-height: 1.6; }
+
+  /* ── REQUEST TRACKER ── */
+  .request-row {
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .request-row:last-child { border-bottom: none; }
+  .request-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 4px; }
+  .request-label { font-size: 14px; font-weight: 600; }
+  .request-meta { font-size: 12px; color: var(--muted); margin-top: 4px; }
+  .status-tag {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 12px;
+    white-space: nowrap;
+  }
+  .status-tag.open { background: var(--yellow-bg); color: var(--yellow); }
+  .status-tag.in-progress { background: #E3F2FD; color: #1565C0; }
+  .status-tag.resolved { background: var(--mint); color: var(--mint2); }
+
+  /* ── SECTION DIVIDER ── */
+  .section-label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    margin: 20px 0 10px;
+  }
+
+  /* ── TOTAL ROW ── */
+  .total-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 16px;
+    background: var(--navy);
+    border-radius: 8px;
+    margin-top: 12px;
+    color: #fff;
+  }
+  .total-row .t-label { font-size: 13px; font-weight: 600; }
+  .total-row .t-amount { font-size: 20px; font-weight: 700; font-family: 'Courier New', monospace; }
+
+  /* info note */
+  .info-note {
+    font-size: 12px;
+    color: var(--muted);
+    background: #F5F7FA;
+    border-radius: 8px;
+    padding: 10px 14px;
+    margin-top: 12px;
+    line-height: 1.6;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; animation: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══ HEADER ══ -->
+<header class="site-header">
+  <div class="logo">
+    Wade Ventures LLC
+    <span>511 Mount Lubentia Ct · Largo, MD 20774</span>
+  </div>
+  <div class="tenant-badge">👤 Georgette N.</div>
+</header>
+
+<!-- ══ TAB NAV ══ -->
+<nav class="tab-nav">
+  <button class="tab-btn active" onclick="switchTab('pay', this)">
+    <span class="icon">💳</span>Pay Rent
+  </button>
+  <button class="tab-btn" onclick="switchTab('request', this)">
+    <span class="icon">🔧</span>Requests
+  </button>
+  <button class="tab-btn" onclick="switchTab('history', this)">
+    <span class="icon">📋</span>History
+  </button>
+  <button class="tab-btn" onclick="switchTab('notices', this)">
+    <span class="icon">📬</span>Notices
+  </button>
+</nav>
+
+<!-- ══ CONTENT ══ -->
+<main class="content">
+
+  <!-- ─── PAY TAB ─── -->
+  <div id="tab-pay" class="tab-panel active">
+
+    <div id="pay-success" class="success-banner">
+      <div class="success-icon">✅</div>
+      <div class="success-title">Payment Confirmed</div>
+      <div class="success-sub" id="success-msg">Your landlord has been notified. A receipt will be emailed to you shortly.</div>
+    </div>
+
+    <!-- Rent Status Card -->
+    <div class="rent-status" id="rent-status-card">
+      <div class="month-label" id="current-month-label">Loading...</div>
+      <div class="amount" id="rent-amount-display">$2,300.00</div>
+      <div class="due-label">Due <strong>1st of each month</strong> · Late fee starts the 6th</div>
+      <div class="countdown" id="countdown-display"></div>
+      <div class="status-pill due" id="rent-status-pill">
+        <div class="status-dot"></div>
+        <span id="rent-status-text">Due This Month</span>
+      </div>
+    </div>
+
+    <!-- ACH Instructions -->
+    <div class="card">
+      <div class="card-title">Pay by ACH Transfer</div>
+      <div class="card-sub">Send payment directly from your bank — no fees.</div>
+
+      <div class="ach-box">
+        <div class="ach-title">Mercury Business Account — ACH Details</div>
+        <div class="ach-row">
+          <span class="ach-key">Bank Name</span>
+          <span class="ach-val">Mercury</span>
+          <button class="copy-btn" onclick="copyText('Mercury', this)">Copy</button>
+        </div>
+        <div class="ach-row">
+          <span class="ach-key">Account Name</span>
+          <span class="ach-val">Wade Ventures LLC</span>
+          <button class="copy-btn" onclick="copyText('Wade Ventures LLC', this)">Copy</button>
+        </div>
+        <div class="ach-row">
+          <span class="ach-key">Routing Number</span>
+          <span class="ach-val">[ADD ROUTING #]</span>
+          <button class="copy-btn" onclick="copyText('', this)">Copy</button>
+        </div>
+        <div class="ach-row">
+          <span class="ach-key">Account Number</span>
+          <span class="ach-val">[ADD ACCOUNT #]</span>
+          <button class="copy-btn" onclick="copyText('', this)">Copy</button>
+        </div>
+        <div class="ach-row">
+          <span class="ach-key">Account Type</span>
+          <span class="ach-val">Checking</span>
+          <button class="copy-btn" onclick="copyText('Checking', this)">Copy</button>
+        </div>
+      </div>
+
+      <div class="info-note">
+        ℹ️ Include your name and property address in the ACH memo field so your payment is matched immediately.
+      </div>
+    </div>
+
+    <!-- Water Bill -->
+    <div class="card">
+      <div class="card-title">Water / Sewer Bill</div>
+      <div class="card-sub">Billed monthly per lease Section 29. Add to your rent ACH transfer.</div>
+
+      <div class="water-badge">
+        <div class="water-icon">💧</div>
+        <div class="water-info">
+          <div class="wlabel">Current Water Bill</div>
+          <div class="wamt" id="water-amount">Check with landlord</div>
+        </div>
+      </div>
+      <div class="info-note">
+        A copy of the utility bill will be emailed to you each month when the water bill is posted. Include this amount with your rent ACH transfer.
+      </div>
+    </div>
+
+    <!-- Payment Breakdown -->
+    <div class="card">
+      <div class="card-title">This Month's Total</div>
+      <div class="card-sub" id="breakdown-month">August 2026</div>
+
+      <div class="history-row">
+        <div class="history-icon rent">🏠</div>
+        <div class="history-info">
+          <div class="h-label">Monthly Rent</div>
+          <div class="h-date">Due August 1, 2026</div>
+        </div>
+        <div class="history-amount">$2,300.00</div>
+      </div>
+      <div class="history-row">
+        <div class="history-icon water">💧</div>
+        <div class="history-info">
+          <div class="h-label">Water / Sewer</div>
+          <div class="h-date">Per lease Sec. 29</div>
+        </div>
+        <div class="history-amount" id="water-total-display">TBD</div>
+      </div>
+
+      <div class="total-row">
+        <div class="t-label">Total Due</div>
+        <div class="t-amount" id="grand-total">$2,300.00+</div>
+      </div>
+    </div>
+
+    <!-- Confirm Button -->
+    <button class="btn btn-primary" onclick="openConfirmModal()">
+      ✅ I've Sent My Payment
+    </button>
+    <div class="info-note" style="margin-top:10px;">
+      Tap this after completing your ACH transfer. Your landlord will verify and send a receipt to your email.
+    </div>
+  </div>
+
+  <!-- ─── REQUEST TAB ─── -->
+  <div id="tab-request" class="tab-panel">
+
+    <div id="request-success" class="success-banner">
+      <div class="success-icon">🔧</div>
+      <div class="success-title">Request Submitted</div>
+      <div class="success-sub">Calvin has been notified. You'll receive a confirmation email with your ticket number.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Submit a Maintenance Request</div>
+      <div class="card-sub">Report issues with the property. All requests are logged and tracked.</div>
+
+      <div class="form-group">
+        <label>What needs attention?</label>
+        <select id="req-category">
+          <option value="">Select a category</option>
+          <option>Plumbing / Water</option>
+          <option>Electrical</option>
+          <option>HVAC / Heating / Cooling</option>
+          <option>Appliance</option>
+          <option>Windows / Doors / Locks</option>
+          <option>Lawn / Exterior</option>
+          <option>Pest Control</option>
+          <option>Other</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Priority Level</label>
+        <select id="req-priority">
+          <option value="normal">Normal — within a few days</option>
+          <option value="urgent">Urgent — safety or major damage</option>
+          <option value="low">Low — when convenient</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Description</label>
+        <textarea id="req-description" placeholder="Describe the issue in detail — location in the home, when it started, how serious it is..."></textarea>
+      </div>
+
+      <div class="form-group">
+        <label>Best time for access</label>
+        <input type="text" id="req-access" placeholder="e.g. Weekday mornings, after 5pm weekdays">
+      </div>
+
+      <button class="btn btn-primary" onclick="submitRequest()">Submit Request</button>
+    </div>
+
+    <!-- Open Requests -->
+    <div class="section-label">Your Open Requests</div>
+    <div class="card">
+      <div class="request-row">
+        <div class="request-top">
+          <div class="request-label">Lawn Not Maintained</div>
+          <span class="status-tag open">Open</span>
+        </div>
+        <div class="request-meta">Exterior · Submitted July 14, 2026 · Deadline July 21, 2026</div>
+      </div>
+      <div class="request-row">
+        <div class="request-top">
+          <div class="request-label">Xfinity Cable — Unsecured Line</div>
+          <span class="status-tag in-progress">In Progress</span>
+        </div>
+        <div class="request-meta">Exterior / Utility · Reported July 14, 2026 · Xfinity contacted</div>
+      </div>
+    </div>
+
+    <div class="section-label">Completed Repairs</div>
+    <div class="card">
+      <div class="request-row">
+        <div class="request-top">
+          <div class="request-label">Screen Door</div>
+          <span class="status-tag resolved">Resolved</span>
+        </div>
+        <div class="request-meta">Entry/Patio · Completed May 2026</div>
+      </div>
+      <div class="request-row">
+        <div class="request-top">
+          <div class="request-label">Windows Hard to Open — Bedroom 1, 2 & Kitchen</div>
+          <span class="status-tag resolved">Resolved</span>
+        </div>
+        <div class="request-meta">Multiple rooms · Completed May 2026</div>
+      </div>
+      <div class="request-row">
+        <div class="request-top">
+          <div class="request-label">Garbage Disposal / Sitting Water</div>
+          <span class="status-tag resolved">Resolved</span>
+        </div>
+        <div class="request-meta">Kitchen · Completed May 2026</div>
+      </div>
+      <div class="request-row">
+        <div class="request-top">
+          <div class="request-label">Window Screens, Blinds & Curtain Rod</div>
+          <span class="status-tag resolved">Resolved</span>
+        </div>
+        <div class="request-meta">Kitchen / Bedroom 1 · Completed May 2026</div>
+      </div>
+      <div class="request-row">
+        <div class="request-top">
+          <div class="request-label">Damage Covered Near Patio Door</div>
+          <span class="status-tag resolved">Resolved</span>
+        </div>
+        <div class="request-meta">Patio Door Area · Completed May 2026</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── HISTORY TAB ─── -->
+  <div id="tab-history" class="tab-panel">
+    <div class="card">
+      <div class="card-title">Payment History</div>
+      <div class="card-sub">511 Mount Lubentia Ct · Lease: May 1, 2026 – Apr 30, 2027</div>
+
+      <div class="history-row">
+        <div class="history-icon rent">🏠</div>
+        <div class="history-info">
+          <div class="h-label">July Rent</div>
+          <div class="h-date">Received July 1, 2026 · WV-2026-003</div>
+        </div>
+        <div style="text-align:right">
+          <div class="history-amount">$2,300.00</div>
+          <div class="history-badge">Paid</div>
+        </div>
+      </div>
+
+      <div class="history-row">
+        <div class="history-icon rent">🏠</div>
+        <div class="history-info">
+          <div class="h-label">June Rent</div>
+          <div class="h-date">Received June 1, 2026 · WV-2026-002</div>
+        </div>
+        <div style="text-align:right">
+          <div class="history-amount">$2,300.00</div>
+          <div class="history-badge">Paid</div>
+        </div>
+      </div>
+
+      <div class="history-row">
+        <div class="history-icon water">💧</div>
+        <div class="history-info">
+          <div class="h-label">June Water / Sewer</div>
+          <div class="h-date">Received June 1, 2026 · WV-2026-002</div>
+        </div>
+        <div style="text-align:right">
+          <div class="history-amount">$86.30</div>
+          <div class="history-badge">Paid</div>
+        </div>
+      </div>
+
+      <div class="history-row">
+        <div class="history-icon rent">🏠</div>
+        <div class="history-info">
+          <div class="h-label">May Rent</div>
+          <div class="h-date">Received May 1, 2026 · WV-2026-001</div>
+        </div>
+        <div style="text-align:right">
+          <div class="history-amount">$2,300.00</div>
+          <div class="history-badge">Paid</div>
+        </div>
+      </div>
+
+      <div class="history-row">
+        <div class="history-icon water">💧</div>
+        <div class="history-info">
+          <div class="h-label">May Water / Sewer</div>
+          <div class="h-date">Received May 1, 2026 · WV-2026-001</div>
+        </div>
+        <div style="text-align:right">
+          <div class="history-amount">$86.30</div>
+          <div class="history-badge">Paid</div>
+        </div>
+      </div>
+
+      <div class="history-row">
+        <div class="history-icon deposit">🔒</div>
+        <div class="history-info">
+          <div class="h-label">Security Deposit</div>
+          <div class="h-date">Received May 1, 2026 · WV-2026-001 · Held in escrow</div>
+        </div>
+        <div style="text-align:right">
+          <div class="history-amount">$2,300.00</div>
+          <div class="history-badge">Held</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="background:#F0F4FA;">
+      <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
+        <span style="font-size:13px; color:var(--muted);">Total Paid (Rent + Water)</span>
+        <span style="font-weight:700; color:var(--navy);">$7,072.60</span>
+      </div>
+      <div style="display:flex; justify-content:space-between;">
+        <span style="font-size:13px; color:var(--muted);">Lease Remaining</span>
+        <span style="font-weight:700; color:var(--navy);" id="months-remaining">— months</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── NOTICES TAB ─── -->
+  <div id="tab-notices" class="tab-panel">
+    <div class="section-label">Active Notices</div>
+
+    <div class="notice-card warning">
+      <div class="notice-date">July 14, 2026</div>
+      <div class="notice-title">⚠️ Lawn Maintenance — Action Required</div>
+      <div class="notice-body">
+        Per Section 25C of your lease, the lawn must be maintained in the same condition as at move-in. The lawn has not been cut in approximately 2–3 months. Please have this addressed by <strong>July 21, 2026</strong>. Failure to do so will result in the landlord arranging lawn service and charging the cost as additional rent per Section 25N.
+      </div>
+    </div>
+
+    <div class="notice-card info">
+      <div class="notice-date">July 14, 2026</div>
+      <div class="notice-title">📡 Xfinity Cable — Please Call to Schedule</div>
+      <div class="notice-body">
+        There is an unsecured Xfinity cable running from the house to the back field utility box. Please contact Xfinity at <strong>1-800-934-6489</strong> to schedule a technician to bury or secure the cable, and confirm the appointment date with your landlord by <strong>July 21, 2026</strong>.
+      </div>
+    </div>
+
+    <div class="section-label">Past Notices</div>
+
+    <div class="notice-card info" style="opacity:0.65;">
+      <div class="notice-date">April 28, 2026</div>
+      <div class="notice-title">✅ Welcome to 511 Mount Lubentia Ct</div>
+      <div class="notice-body">
+        Lease executed. Move-in date May 1, 2026. Front door lock reprogrammed for your exclusive access. All pre-move-in repairs completed per the General Addendum dated April 28, 2026.
+      </div>
+    </div>
+
+    <div class="section-label">Contact Your Landlord</div>
+    <div class="card">
+      <div style="display:flex; align-items:center; gap:12px; margin-bottom:14px;">
+        <div style="width:48px;height:48px;border-radius:50%;background:var(--navy);display:flex;align-items:center;justify-content:center;font-size:20px;color:#fff;flex-shrink:0;">👤</div>
+        <div>
+          <div style="font-weight:700;font-size:15px;">Calvin Wade Jr.</div>
+          <div style="font-size:13px;color:var(--muted);">Wade Ventures LLC · Landlord</div>
+        </div>
+      </div>
+      <a href="tel:3017281557" class="btn btn-primary" style="text-decoration:none;display:block;">📞 (301) 728-1557</a>
+      <a href="mailto:calvin@wadeventures.com" class="btn btn-secondary" style="text-decoration:none;display:block;padding:14px;text-align:center;margin-top:10px;border-radius:10px;font-weight:600;color:var(--blue);border:2px solid var(--blue);">✉️ Send Email</a>
+    </div>
+  </div>
+
+</main>
+
+<!-- ══ CONFIRM PAYMENT MODAL ══ -->
+<div class="modal-overlay" id="confirm-modal">
+  <div class="modal">
+    <h3>Confirm Payment Sent</h3>
+    <p>Please confirm you have completed your ACH bank transfer to the Mercury Business Account for the amount below.</p>
+    <div class="modal-amount" id="modal-total">$2,300.00</div>
+    <div style="font-size:12px;color:var(--muted);text-align:center;margin-bottom:16px;">Your landlord will verify receipt and email you a confirmation.</div>
+    <div class="modal-btns">
+      <button class="btn btn-secondary" onclick="closeModal()" style="flex:1;">Cancel</button>
+      <button class="btn btn-primary" onclick="confirmPayment()" style="flex:1;">Yes, I Sent It</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ── TAB SWITCHING ──
+  function switchTab(id, btn) {
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('tab-' + id).classList.add('active');
+    btn.classList.add('active');
+  }
+
+  // ── COUNTDOWN TO NEXT 1ST ──
+  function updateCountdown() {
+    const now = new Date();
+    const monthNames = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+
+    // Next due date = 1st of next month (or this month if before 1st)
+    let due;
+    if (now.getDate() === 1 && now.getHours() < 20) {
+      due = new Date(now.getFullYear(), now.getMonth(), 1, 20, 0, 0);
+    } else {
+      due = new Date(now.getFullYear(), now.getMonth() + 1, 1, 0, 0, 0);
+    }
+
+    const diff = due - now;
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+
+    document.getElementById('current-month-label').textContent =
+      monthNames[due.getMonth()] + ' ' + due.getFullYear() + ' Rent';
+
+    document.getElementById('breakdown-month').textContent =
+      monthNames[due.getMonth()] + ' ' + due.getFullYear();
+
+    const cd = document.getElementById('countdown-display');
+    cd.innerHTML = `
+      <div class="countdown-block"><div class="num">${days}</div><div class="lbl">Days</div></div>
+      <div class="countdown-block"><div class="num">${hours}</div><div class="lbl">Hours</div></div>
+      <div class="countdown-block"><div class="num">${mins}</div><div class="lbl">Mins</div></div>
+    `;
+
+    // Months remaining in lease
+    const leaseEnd = new Date(2027, 3, 30);
+    const monthsLeft = Math.max(0, Math.round((leaseEnd - now) / (1000 * 60 * 60 * 24 * 30)));
+    const el = document.getElementById('months-remaining');
+    if (el) el.textContent = monthsLeft + ' months';
+  }
+
+  updateCountdown();
+  setInterval(updateCountdown, 60000);
+
+  // ── COPY TO CLIPBOARD ──
+  function copyText(text, btn) {
+    if (!text || text.includes('ADD')) {
+      btn.textContent = '—';
+      setTimeout(() => btn.textContent = 'Copy', 1500);
+      return;
+    }
+    navigator.clipboard.writeText(text).then(() => {
+      btn.textContent = '✓';
+      setTimeout(() => btn.textContent = 'Copy', 1500);
+    });
+  }
+
+  // ── CONFIRM MODAL ──
+  function openConfirmModal() {
+    document.getElementById('confirm-modal').classList.add('open');
+  }
+  function closeModal() {
+    document.getElementById('confirm-modal').classList.remove('open');
+  }
+  function confirmPayment() {
+    closeModal();
+    const banner = document.getElementById('pay-success');
+    banner.classList.add('show');
+    banner.scrollIntoView({ behavior: 'smooth' });
+
+    // Update status pill
+    const pill = document.getElementById('rent-status-pill');
+    pill.className = 'status-pill paid';
+    document.getElementById('rent-status-text').textContent = 'Payment Submitted';
+  }
+
+  // ── MAINTENANCE REQUEST ──
+  function submitRequest() {
+    const cat = document.getElementById('req-category').value;
+    const desc = document.getElementById('req-description').value;
+    if (!cat || !desc.trim()) {
+      alert('Please select a category and describe the issue before submitting.');
+      return;
+    }
+    document.getElementById('request-success').classList.add('show');
+    document.getElementById('req-category').value = '';
+    document.getElementById('req-priority').value = 'normal';
+    document.getElementById('req-description').value = '';
+    document.getElementById('req-access').value = '';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // close modal on overlay click
+  document.getElementById('confirm-modal').addEventListener('click', function(e) {
+    if (e.target === this) closeModal();
+  });
+</script>
+</body>
+</html>
