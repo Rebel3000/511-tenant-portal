@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tenant Portal — 511 Mount Lubentia Ct</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy:   #1E3A5F;
+    --blue:   #2E75B6;
+    --slate:  #4A6FA5;
+    --mint:   #E8F5E9;
+    --mint2:  #2E7D32;
+    --warm:   #FFFDF7;
+    --text:   #1A1A2E;
+    --muted:  #6B7A8D;
+    --border: #DDE3EC;
+    --red:    #C62828;
+    --red-bg: #FFEBEE;
+    --yellow: #F57F17;
+    --yellow-bg: #FFFDE7;
+    --card:   #FFFFFF;
+    --radius: 12px;
+    --shadow: 0 2px 12px rgba(30,58,95,0.08);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--warm);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* ── TOP HEADER ── */
+  .site-header {
+    background: var(--navy);
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  }
+  .site-header .logo {
+    font-family: 'DM Serif Display', serif;
+    font-size: 18px;
+    color: #fff;
+    line-height: 1.2;
+  }
+  .site-header .logo span {
+    display: block;
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.6);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+  .tenant-badge {
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 6px 12px;
+    border-radius: 20px;
+  }
+
+  /* ── NAV TABS ── */
+  .tab-nav {
+    background: var(--navy);
+    display: flex;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .tab-nav::-webkit-scrollbar { display: none; }
+  .tab-btn {
+    flex: 1;
+    min-width: 80px;
+    padding: 12px 8px;
+    background: none;
+    border: none;
+    color: rgba(255,255,255,0.55);
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    transition: color 0.2s, border-bottom 0.2s;
+    border-bottom: 3px solid transparent;
+    white-space: nowrap;
+  }
+  .tab-btn .icon { font-size: 18px; }
+  .tab-btn.active {
+    color: #fff;
+    border-bottom-color: #2E75B6;
+  }
+  .tab-btn:hover { color: rgba(255,255,255,0.85); }
+
+  /* ── CONTENT AREA ── */
+  .content { max-width: 640px; margin: 0 auto; padding: 20px 16px 40px; }
+
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* ── CARDS ── */
+  .card {
+    background: var(--card);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 20px;
+    margin-bottom: 16px;
+    border: 1px solid var(--border);
+  }
+  .card-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 20px;
+    color: var(--navy);
+    margin-bottom: 4px;
+  }
+  .card-sub {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 16px;
+  }
+
+  /* ── RENT STATUS CARD ── */
+  .rent-status {
+    background: linear-gradient(135deg, var(--navy) 0%, #2E75B6 100%);
+    border-radius: var(--radius);
+    padding: 24px 20px;
+    margin-bottom: 16px;
+    color: #fff;
+    position: relative;
+    overflow: hidden;
+  }
+  .rent-status::before {
+    content: '';
+    position: absolute;
+    top: -30px; right: -30px;
+    width: 120px; height: 120px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 50%;
+  }
+  .rent-status .month-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.65);
+    margin-bottom: 6px;
+  }
+  .rent-status .amount {
+    font-family: 'DM Serif Display', serif;
+    font-size: 42px;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+  .rent-status .due-label {
+    font-size: 13px;
+    color: rgba(255,255,255,0.75);
+  }
+  .rent-status .due-label strong { color: #fff; }
+  .status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 14px;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+  }
+  .status-pill.due { background: rgba(245,127,23,0.25); color: #FFD54F; }
+  .status-pill.paid { background: rgba(46,125,50,0.3); color: #A5D6A7; }
+  .status-pill.late { background: rgba(198,40,40,0.3); color: #EF9A9A; }
+  .status-dot { width: 8px; height: 8px; border-radius: 50%; }
+  .status-pill.due .status-dot { background: #FFD54F; }
+  .status-pill.paid .status-dot { background: #A5D6A7; }
+  .status-pill.late .status-dot { background: #EF9A9A; }
+
+  /* countdown */
+  .countdown {
+    display: flex;
+    gap: 12px;
+    margin-top: 16px;
+  }
+  .countdown-block {
+    text-align: center;
+    background: rgba(255,255,255,0.12);
+    border-radius: 8px;
+    padding: 8px 14px;
+    min-width: 56px;
+  }
+  .countdown-block .num {
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 1;
+  }
+  .countdown-block .lbl {
+    font-size: 10px;
+    color: rgba(255,255,255,0.6);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-top: 2px;
+  }
+
+  /* ── ACH INSTRUCTIONS ── */
+  .ach-box {
+    background: #F0F4FA;
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--blue);
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 16px;
+  }
+  .ach-box .ach-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .ach-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 14px;
+  }
+  .ach-row:last-child { border-bottom: none; }
+  .ach-row .ach-key { color: var(--muted); font-size: 12px; }
+  .ach-row .ach-val { font-weight: 600; font-family: 'Courier New', monospace; }
+  .copy-btn {
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 3px 8px;
+    font-size: 11px;
+    color: var(--blue);
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+  }
+  .copy-btn:hover { background: var(--border); }
+
+  /* ── WATER BILL SECTION ── */
+  .water-badge {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #E3F2FD;
+    border: 1px solid #90CAF9;
+    border-radius: 8px;
+    padding: 14px 16px;
+    margin-bottom: 16px;
+  }
+  .water-badge .water-icon { font-size: 24px; }
+  .water-badge .water-info { flex: 1; }
+  .water-badge .water-info .wlabel { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
+  .water-badge .water-info .wamt { font-size: 20px; font-weight: 700; color: var(--navy); }
+
+  /* ── BUTTONS ── */
+  .btn {
+    display: block;
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: 10px;
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+  }
+  .btn-primary {
+    background: var(--blue);
+    color: #fff;
+  }
+  .btn-primary:hover { background: var(--navy); transform: translateY(-1px); }
+  .btn-secondary {
+    background: transparent;
+    color: var(--blue);
+    border: 2px solid var(--blue);
+    margin-top: 10px;
+  }
+  .btn-secondary:hover { background: #EBF3FB; }
+  .btn-danger { background: var(--red); color: #fff; margin-top: 10px; }
+
+  /* ── CONFIRM MODAL ── */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 200;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: #fff;
+    border-radius: var(--radius);
+    padding: 28px 24px;
+    max-width: 400px;
+    width: 100%;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+  }
+  .modal h3 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 22px;
+    color: var(--navy);
+    margin-bottom: 8px;
+  }
+  .modal p { font-size: 14px; color: var(--muted); margin-bottom: 20px; line-height: 1.6; }
+  .modal .modal-amount {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--navy);
+    text-align: center;
+    margin: 16px 0;
+  }
+  .modal .modal-btns { display: flex; gap: 10px; }
+  .modal .modal-btns .btn { flex: 1; }
+
+  /* ── SUCCESS STATE ── */
+  .success-banner {
+    display: none;
+    background: var(--mint);
+    border: 1px solid #A5D6A7;
+    border-radius: 10px;
+    padding: 16px;
+    text-align: center;
+    margin-bottom: 16px;
+  }
+  .success-banner.show { display: block; }
+  .success-banner .success-icon { font-size: 32px; margin-bottom: 8px; }
+  .success-banner .success-title { font-weight: 700; color: var(--mint2); font-size: 16px; }
+  .success-banner .success-sub { font-size: 13px; color: #388E3C; margin-top: 4px; }
+
+  /* ── FORM ELEMENTS ── */
+  .form-group { margin-bottom: 16px; }
+  .form-group label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 6px;
+  }
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    color: var(--text);
+    background: #fff;
+    transition: border-color 0.2s;
+    outline: none;
+  }
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus { border-color: var(--blue); }
+  .form-group textarea { resize: vertical; min-height: 100px; }
+
+  /* Priority badges */
+  .priority { display: inline-block; padding: 3px 10px; border-radius: 12px; font-size: 11px; font-weight: 600; }
+  .priority.urgent { background: var(--red-bg); color: var(--red); }
+  .priority.normal { background: var(--yellow-bg); color: var(--yellow); }
+  .priority.low { background: var(--mint); color: var(--mint2); }
+
+  /* ── HISTORY TABLE ── */
+  .history-row {
+    display: flex;
+    align-items: center;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+    gap: 12px;
+  }
+  .history-row:last-child { border-bottom: none; }
+  .history-icon {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+  .history-icon.rent { background: #E3F2FD; }
+  .history-icon.water { background: #E0F7FA; }
+  .history-icon.deposit { background: #F3E5F5; }
+  .history-info { flex: 1; }
+  .history-info .h-label { font-size: 14px; font-weight: 600; color: var(--text); }
+  .history-info .h-date { font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .history-amount { font-size: 16px; font-weight: 700; color: var(--navy); font-family: 'Courier New', monospace; }
+  .history-badge {
+    font-size: 10px;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 10px;
+    background: var(--mint);
+    color: var(--mint2);
+  }
+
+  /* ── NOTICES ── */
+  .notice-card {
+    border-radius: 10px;
+    padding: 16px;
+    margin-bottom: 12px;
+    border-left: 4px solid;
+  }
+  .notice-card.info { background: #E3F2FD; border-color: #2196F3; }
+  .notice-card.warning { background: var(--yellow-bg); border-color: var(--yellow); }
+  .notice-card.urgent { background: var(--red-bg); border-color: var(--red); }
+  .notice-card .notice-date { font-size: 11px; color: var(--muted); margin-bottom: 4px; }
+  .notice-card .notice-title { font-weight: 700; font-size: 14px; margin-bottom: 6px; }
+  .notice-card.warning .notice-title { color: var(--yellow); }
+  .notice-card.urgent .notice-title { color: var(--red); }
+  .notice-card .notice-body { font-size: 13px; color: var(--text); line-height: 1.6; }
+
+  /* ── REQUEST TRACKER ── */
+  .request-row {
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .request-row:last-child { border-bottom: none; }
+  .request-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 4px; }
+  .request-label { font-size: 14px; font-weight: 600; }
+  .request-meta { font-size: 12px; color: var(--muted); margin-top: 4px; }
+  .status-tag {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 12px;
+    white-space: nowrap;
+  }
+  .status-tag.open { background: var(--yellow-bg); color: var(--yellow); }
+  .status-tag.in-progress { background: #E3F2FD; color: #1565C0; }
+  .status-tag.resolved { background: var(--mint); color: var(--mint2); }
+
+  /* ── SECTION DIVIDER ── */
+  .section-label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    margin: 20px 0 10px;
+  }
+
+  /* ── TOTAL ROW ── */
+  .total-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 16px;
+    background: var(--navy);
+    border-radius: 8px;
+    margin-top: 12px;
+    color: #fff;
+  }
+  .total-row .t-label { font-size: 13px; font-weight: 600; }
+  .total-row .t-amount { font-size: 20px; font-weight: 700; font-family: 'Courier New', monospace; }
+
+  /* info note */
+  .info-note {
+    font-size: 12px;
+    color: var(--muted);
+    background: #F5F7FA;
+    border-radius: 8px;
+    padding: 10px 14px;
+    margin-top: 12px;
+    line-height: 1.6;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; animation: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══ HEADER ══ -->
+<header class="site-header">
+  <div class="logo" style="display:flex;align-items:center;gap:12px;">
+    <img src="data:image/png;base64,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" alt="Wade Ventures LLC" style="height:44px;width:auto;filter:brightness(0) invert(1);">
+    <span style="display:block;font-family:Inter,sans-serif;font-size:11px;font-weight:500;color:rgba(255,255,255,0.65);letter-spacing:0.05em;text-transform:uppercase;line-height:1.4;">511 Mount Lubentia Ct<br>Largo, MD 20774</span>
+  </div>
+  <div class="tenant-badge">👤 Georgette N.</div>
+</header>
+
+<!-- ══ TAB NAV ══ -->
+<nav class="tab-nav">
+  <button class="tab-btn active" onclick="switchTab('pay', this)">
+    <span class="icon">💳</span>Pay Rent
+  </button>
+  <button class="tab-btn" onclick="switchTab('request', this)">
+    <span class="icon">🔧</span>Requests
+  </button>
+  <button class="tab-btn" onclick="switchTab('history', this)">
+    <span class="icon">📋</span>History
+  </button>
+  <button class="tab-btn" onclick="switchTab('notices', this)">
+    <span class="icon">📬</span>Notices
+  </button>
+</nav>
+
+<!-- ══ CONTENT ══ -->
+<main class="content">
+
+  <!-- ─── PAY TAB ─── -->
+  <div id="tab-pay" class="tab-panel active">
+
+    <div id="pay-success" class="success-banner">
+      <div class="success-icon">✅</div>
+      <div class="success-title">Payment Confirmed</div>
+      <div class="success-sub" id="success-msg">Your landlord has been notified. A receipt will be emailed to you shortly.</div>
+    </div>
+
+    <!-- Rent Status Card -->
+    <div class="rent-status" id="rent-status-card">
+      <div class="month-label" id="current-month-label">Loading...</div>
+      <div class="amount" id="rent-amount-display">$2,300.00</div>
+      <div class="due-label">Due <strong>1st of each month</strong> · Late fee starts the 6th</div>
+      <div class="countdown" id="countdown-display"></div>
+      <div class="status-pill due" id="rent-status-pill">
+        <div class="status-dot"></div>
+        <span id="rent-status-text">Due This Month</span>
+      </div>
+    </div>
+
+    <!-- ACH Instructions -->
+    <div class="card">
+      <div class="card-title">Pay by ACH Transfer</div>
+      <div class="card-sub">Send payment directly from your bank — no fees.</div>
+
+      <div class="ach-box">
+        <div class="ach-title">Mercury Business Account — ACH Details</div>
+        <div class="ach-row">
+          <span class="ach-key">Bank Name</span>
+          <span class="ach-val">Mercury</span>
+          <button class="copy-btn" onclick="copyText('Mercury', this)">Copy</button>
+        </div>
+        <div class="ach-row">
+          <span class="ach-key">Account Name</span>
+          <span class="ach-val">Wade Ventures LLC</span>
+          <button class="copy-btn" onclick="copyText('Wade Ventures LLC', this)">Copy</button>
+        </div>
+        <div class="ach-row">
+          <span class="ach-key">Routing Number</span>
+          <span class="ach-val">[ADD ROUTING #]</span>
+          <button class="copy-btn" onclick="copyText('', this)">Copy</button>
+        </div>
+        <div class="ach-row">
+          <span class="ach-key">Account Number</span>
+          <span class="ach-val">[ADD ACCOUNT #]</span>
+          <button class="copy-btn" onclick="copyText('', this)">Copy</button>
+        </div>
+        <div class="ach-row">
+          <span class="ach-key">Account Type</span>
+          <span class="ach-val">Checking</span>
+          <button class="copy-btn" onclick="copyText('Checking', this)">Copy</button>
+        </div>
+      </div>
+
+      <div class="info-note">
+        ℹ️ Include your name and property address in the ACH memo field so your payment is matched immediately.
+      </div>
+    </div>
+
+    <!-- Water Bill -->
+    <div class="card">
+      <div class="card-title">Water / Sewer Bill</div>
+      <div class="card-sub">Billed monthly per lease Section 29. Add to your rent ACH transfer.</div>
+
+      <div class="water-badge">
+        <div class="water-icon">💧</div>
+        <div class="water-info">
+          <div class="wlabel">Current Water Bill</div>
+          <div class="wamt" id="water-amount">Check with landlord</div>
+        </div>
+      </div>
+      <div class="info-note">
+        A copy of the utility bill will be emailed to you each month when the water bill is posted. Include this amount with your rent ACH transfer.
+      </div>
+    </div>
+
+    <!-- Payment Breakdown -->
+    <div class="card">
+      <div class="card-title">This Month's Total</div>
+      <div class="card-sub" id="breakdown-month">August 2026</div>
+
+      <div class="history-row">
+        <div class="history-icon rent">🏠</div>
+        <div class="history-info">
+          <div class="h-label">Monthly Rent</div>
+          <div class="h-date">Due August 1, 2026</div>
+        </div>
+        <div class="history-amount">$2,300.00</div>
+      </div>
+      <div class="history-row">
+        <div class="history-icon water">💧</div>
+        <div class="history-info">
+          <div class="h-label">Water / Sewer</div>
+          <div class="h-date">Per lease Sec. 29</div>
+        </div>
+        <div class="history-amount" id="water-total-display">TBD</div>
+      </div>
+
+      <div class="total-row">
+        <div class="t-label">Total Due</div>
+        <div class="t-amount" id="grand-total">$2,300.00+</div>
+      </div>
+    </div>
+
+    <!-- Confirm Button -->
+    <button class="btn btn-primary" onclick="openConfirmModal()">
+      ✅ I've Sent My Payment
+    </button>
+    <div class="info-note" style="margin-top:10px;">
+      Tap this after completing your ACH transfer. Your landlord will verify and send a receipt to your email.
+    </div>
+  </div>
+
+  <!-- ─── REQUEST TAB ─── -->
+  <div id="tab-request" class="tab-panel">
+
+    <div id="request-success" class="success-banner">
+      <div class="success-icon">🔧</div>
+      <div class="success-title">Request Submitted</div>
+      <div class="success-sub">Calvin has been notified. You'll receive a confirmation email with your ticket number.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Submit a Maintenance Request</div>
+      <div class="card-sub">Report issues with the property. All requests are logged and tracked.</div>
+
+      <div class="form-group">
+        <label>What needs attention?</label>
+        <select id="req-category">
+          <option value="">Select a category</option>
+          <option>Plumbing / Water</option>
+          <option>Electrical</option>
+          <option>HVAC / Heating / Cooling</option>
+          <option>Appliance</option>
+          <option>Windows / Doors / Locks</option>
+          <option>Lawn / Exterior</option>
+          <option>Pest Control</option>
+          <option>Other</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Priority Level</label>
+        <select id="req-priority">
+          <option value="normal">Normal — within a few days</option>
+          <option value="urgent">Urgent — safety or major damage</option>
+          <option value="low">Low — when convenient</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Description</label>
+        <textarea id="req-description" placeholder="Describe the issue in detail — location in the home, when it started, how serious it is..."></textarea>
+      </div>
+
+      <div class="form-group">
+        <label>Best time for access</label>
+        <input type="text" id="req-access" placeholder="e.g. Weekday mornings, after 5pm weekdays">
+      </div>
+
+      <button class="btn btn-primary" onclick="submitRequest()">Submit Request</button>
+    </div>
+
+    <!-- Open Requests -->
+    <div class="section-label">Your Open Requests</div>
+    <div class="card">
+      <div class="request-row">
+        <div class="request-top">
+          <div class="request-label">Lawn Not Maintained</div>
+          <span class="status-tag open">Open</span>
+        </div>
+        <div class="request-meta">Exterior · Submitted July 14, 2026 · Deadline July 21, 2026</div>
+      </div>
+      <div class="request-row">
+        <div class="request-top">
+          <div class="request-label">Xfinity Cable — Unsecured Line</div>
+          <span class="status-tag in-progress">In Progress</span>
+        </div>
+        <div class="request-meta">Exterior / Utility · Reported July 14, 2026 · Xfinity contacted</div>
+      </div>
+    </div>
+
+    <div class="section-label">Completed Repairs</div>
+    <div class="card">
+      <div class="request-row">
+        <div class="request-top">
+          <div class="request-label">Screen Door</div>
+          <span class="status-tag resolved">Resolved</span>
+        </div>
+        <div class="request-meta">Entry/Patio · Completed May 2026</div>
+      </div>
+      <div class="request-row">
+        <div class="request-top">
+          <div class="request-label">Windows Hard to Open — Bedroom 1, 2 & Kitchen</div>
+          <span class="status-tag resolved">Resolved</span>
+        </div>
+        <div class="request-meta">Multiple rooms · Completed May 2026</div>
+      </div>
+      <div class="request-row">
+        <div class="request-top">
+          <div class="request-label">Garbage Disposal / Sitting Water</div>
+          <span class="status-tag resolved">Resolved</span>
+        </div>
+        <div class="request-meta">Kitchen · Completed May 2026</div>
+      </div>
+      <div class="request-row">
+        <div class="request-top">
+          <div class="request-label">Window Screens, Blinds & Curtain Rod</div>
+          <span class="status-tag resolved">Resolved</span>
+        </div>
+        <div class="request-meta">Kitchen / Bedroom 1 · Completed May 2026</div>
+      </div>
+      <div class="request-row">
+        <div class="request-top">
+          <div class="request-label">Damage Covered Near Patio Door</div>
+          <span class="status-tag resolved">Resolved</span>
+        </div>
+        <div class="request-meta">Patio Door Area · Completed May 2026</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── HISTORY TAB ─── -->
+  <div id="tab-history" class="tab-panel">
+    <div class="card">
+      <div class="card-title">Payment History</div>
+      <div class="card-sub">511 Mount Lubentia Ct · Lease: May 1, 2026 – Apr 30, 2027</div>
+
+      <div class="history-row">
+        <div class="history-icon rent">🏠</div>
+        <div class="history-info">
+          <div class="h-label">July Rent</div>
+          <div class="h-date">Received July 1, 2026 · WV-2026-003</div>
+        </div>
+        <div style="text-align:right">
+          <div class="history-amount">$2,300.00</div>
+          <div class="history-badge">Paid</div>
+        </div>
+      </div>
+
+      <div class="history-row">
+        <div class="history-icon rent">🏠</div>
+        <div class="history-info">
+          <div class="h-label">June Rent</div>
+          <div class="h-date">Received June 1, 2026 · WV-2026-002</div>
+        </div>
+        <div style="text-align:right">
+          <div class="history-amount">$2,300.00</div>
+          <div class="history-badge">Paid</div>
+        </div>
+      </div>
+
+      <div class="history-row">
+        <div class="history-icon water">💧</div>
+        <div class="history-info">
+          <div class="h-label">June Water / Sewer</div>
+          <div class="h-date">Received June 1, 2026 · WV-2026-002</div>
+        </div>
+        <div style="text-align:right">
+          <div class="history-amount">$86.30</div>
+          <div class="history-badge">Paid</div>
+        </div>
+      </div>
+
+      <div class="history-row">
+        <div class="history-icon rent">🏠</div>
+        <div class="history-info">
+          <div class="h-label">May Rent</div>
+          <div class="h-date">Received May 1, 2026 · WV-2026-001</div>
+        </div>
+        <div style="text-align:right">
+          <div class="history-amount">$2,300.00</div>
+          <div class="history-badge">Paid</div>
+        </div>
+      </div>
+
+      <div class="history-row">
+        <div class="history-icon water">💧</div>
+        <div class="history-info">
+          <div class="h-label">May Water / Sewer</div>
+          <div class="h-date">Received May 1, 2026 · WV-2026-001</div>
+        </div>
+        <div style="text-align:right">
+          <div class="history-amount">$86.30</div>
+          <div class="history-badge">Paid</div>
+        </div>
+      </div>
+
+      <div class="history-row">
+        <div class="history-icon deposit">🔒</div>
+        <div class="history-info">
+          <div class="h-label">Security Deposit</div>
+          <div class="h-date">Received May 1, 2026 · WV-2026-001 · Held in escrow</div>
+        </div>
+        <div style="text-align:right">
+          <div class="history-amount">$2,300.00</div>
+          <div class="history-badge">Held</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="background:#F0F4FA;">
+      <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
+        <span style="font-size:13px; color:var(--muted);">Total Paid (Rent + Water)</span>
+        <span style="font-weight:700; color:var(--navy);">$7,072.60</span>
+      </div>
+      <div style="display:flex; justify-content:space-between;">
+        <span style="font-size:13px; color:var(--muted);">Lease Remaining</span>
+        <span style="font-weight:700; color:var(--navy);" id="months-remaining">— months</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── NOTICES TAB ─── -->
+  <div id="tab-notices" class="tab-panel">
+    <div class="section-label">Active Notices</div>
+
+    <div class="notice-card warning">
+      <div class="notice-date">July 14, 2026</div>
+      <div class="notice-title">⚠️ Lawn Maintenance — Action Required</div>
+      <div class="notice-body">
+        Per Section 25C of your lease, the lawn must be maintained in the same condition as at move-in. The lawn has not been cut in approximately 2–3 months. Please have this addressed by <strong>July 21, 2026</strong>. Failure to do so will result in the landlord arranging lawn service and charging the cost as additional rent per Section 25N.
+      </div>
+    </div>
+
+    <div class="notice-card info">
+      <div class="notice-date">July 14, 2026</div>
+      <div class="notice-title">📡 Xfinity Cable — Please Call to Schedule</div>
+      <div class="notice-body">
+        There is an unsecured Xfinity cable running from the house to the back field utility box. Please contact Xfinity at <strong>1-800-934-6489</strong> to schedule a technician to bury or secure the cable, and confirm the appointment date with your landlord by <strong>July 21, 2026</strong>.
+      </div>
+    </div>
+
+    <div class="section-label">Past Notices</div>
+
+    <div class="notice-card info" style="opacity:0.65;">
+      <div class="notice-date">April 28, 2026</div>
+      <div class="notice-title">✅ Welcome to 511 Mount Lubentia Ct</div>
+      <div class="notice-body">
+        Lease executed. Move-in date May 1, 2026. Front door lock reprogrammed for your exclusive access. All pre-move-in repairs completed per the General Addendum dated April 28, 2026.
+      </div>
+    </div>
+
+    <div class="section-label">Contact Your Landlord</div>
+    <div class="card">
+      <div style="display:flex; align-items:center; gap:12px; margin-bottom:14px;">
+        <div style="width:48px;height:48px;border-radius:50%;background:var(--navy);display:flex;align-items:center;justify-content:center;font-size:20px;color:#fff;flex-shrink:0;">👤</div>
+        <div>
+          <div style="font-weight:700;font-size:15px;">Calvin Wade Jr.</div>
+          <div style="font-size:13px;color:var(--muted);">Wade Ventures LLC · Landlord</div>
+        </div>
+      </div>
+      <a href="tel:3017281557" class="btn btn-primary" style="text-decoration:none;display:block;">📞 (301) 728-1557</a>
+      <a href="mailto:calvin@wadeventures.com" class="btn btn-secondary" style="text-decoration:none;display:block;padding:14px;text-align:center;margin-top:10px;border-radius:10px;font-weight:600;color:var(--blue);border:2px solid var(--blue);">✉️ Send Email</a>
+    </div>
+  </div>
+
+</main>
+
+<!-- ══ CONFIRM PAYMENT MODAL ══ -->
+<div class="modal-overlay" id="confirm-modal">
+  <div class="modal">
+    <h3>Confirm Payment Sent</h3>
+    <p>Please confirm you have completed your ACH bank transfer to the Mercury Business Account for the amount below.</p>
+    <div class="modal-amount" id="modal-total">$2,300.00</div>
+    <div style="font-size:12px;color:var(--muted);text-align:center;margin-bottom:16px;">Your landlord will verify receipt and email you a confirmation.</div>
+    <div class="modal-btns">
+      <button class="btn btn-secondary" onclick="closeModal()" style="flex:1;">Cancel</button>
+      <button class="btn btn-primary" onclick="confirmPayment()" style="flex:1;">Yes, I Sent It</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ── TAB SWITCHING ──
+  function switchTab(id, btn) {
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('tab-' + id).classList.add('active');
+    btn.classList.add('active');
+  }
+
+  // ── COUNTDOWN TO NEXT 1ST ──
+  function updateCountdown() {
+    const now = new Date();
+    const monthNames = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+
+    // Next due date = 1st of next month (or this month if before 1st)
+    let due;
+    if (now.getDate() === 1 && now.getHours() < 20) {
+      due = new Date(now.getFullYear(), now.getMonth(), 1, 20, 0, 0);
+    } else {
+      due = new Date(now.getFullYear(), now.getMonth() + 1, 1, 0, 0, 0);
+    }
+
+    const diff = due - now;
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+
+    document.getElementById('current-month-label').textContent =
+      monthNames[due.getMonth()] + ' ' + due.getFullYear() + ' Rent';
+
+    document.getElementById('breakdown-month').textContent =
+      monthNames[due.getMonth()] + ' ' + due.getFullYear();
+
+    const cd = document.getElementById('countdown-display');
+    cd.innerHTML = `
+      <div class="countdown-block"><div class="num">${days}</div><div class="lbl">Days</div></div>
+      <div class="countdown-block"><div class="num">${hours}</div><div class="lbl">Hours</div></div>
+      <div class="countdown-block"><div class="num">${mins}</div><div class="lbl">Mins</div></div>
+    `;
+
+    // Months remaining in lease
+    const leaseEnd = new Date(2027, 3, 30);
+    const monthsLeft = Math.max(0, Math.round((leaseEnd - now) / (1000 * 60 * 60 * 24 * 30)));
+    const el = document.getElementById('months-remaining');
+    if (el) el.textContent = monthsLeft + ' months';
+  }
+
+  updateCountdown();
+  setInterval(updateCountdown, 60000);
+
+  // ── COPY TO CLIPBOARD ──
+  function copyText(text, btn) {
+    if (!text || text.includes('ADD')) {
+      btn.textContent = '—';
+      setTimeout(() => btn.textContent = 'Copy', 1500);
+      return;
+    }
+    navigator.clipboard.writeText(text).then(() => {
+      btn.textContent = '✓';
+      setTimeout(() => btn.textContent = 'Copy', 1500);
+    });
+  }
+
+  // ── CONFIRM MODAL ──
+  function openConfirmModal() {
+    document.getElementById('confirm-modal').classList.add('open');
+  }
+  function closeModal() {
+    document.getElementById('confirm-modal').classList.remove('open');
+  }
+  function confirmPayment() {
+    closeModal();
+    const banner = document.getElementById('pay-success');
+    banner.classList.add('show');
+    banner.scrollIntoView({ behavior: 'smooth' });
+
+    // Update status pill
+    const pill = document.getElementById('rent-status-pill');
+    pill.className = 'status-pill paid';
+    document.getElementById('rent-status-text').textContent = 'Payment Submitted';
+  }
+
+  // ── MAINTENANCE REQUEST ──
+  function submitRequest() {
+    const cat = document.getElementById('req-category').value;
+    const desc = document.getElementById('req-description').value;
+    if (!cat || !desc.trim()) {
+      alert('Please select a category and describe the issue before submitting.');
+      return;
+    }
+    document.getElementById('request-success').classList.add('show');
+    document.getElementById('req-category').value = '';
+    document.getElementById('req-priority').value = 'normal';
+    document.getElementById('req-description').value = '';
+    document.getElementById('req-access').value = '';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // close modal on overlay click
+  document.getElementById('confirm-modal').addEventListener('click', function(e) {
+    if (e.target === this) closeModal();
+  });
+</script>
+</body>
+</html>
