@@ -13,10 +13,8 @@ export default function Footer() {
       <div className="mx-auto max-w-7xl px-6 py-16 lg:px-8">
         <div className="grid grid-cols-2 gap-10 md:grid-cols-5">
           <div className="col-span-2">
-            <a href="#top" className="flex items-center gap-2 text-lg font-extrabold tracking-tight text-ink">
-              <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-sm text-white">
-                W
-              </span>
+            <a href="#top" className="flex items-center gap-2.5 text-lg font-extrabold tracking-tight text-ink">
+              <img src="/logo-mark.svg" alt="" className="h-8 w-8" width="32" height="32" />
               Wade Vantage
             </a>
             <p className="mt-4 max-w-xs text-sm leading-relaxed text-ink-faint">

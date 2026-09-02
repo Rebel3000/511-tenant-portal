@@ -24,10 +24,8 @@ export default function Navbar() {
       )}
     >
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-8">
-        <a href="#top" className="flex items-center gap-2 text-lg font-extrabold tracking-tight text-ink">
-          <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-sm text-white">
-            W
-          </span>
+        <a href="#top" className="flex items-center gap-2.5 text-lg font-extrabold tracking-tight text-ink">
+          <img src="/logo-mark.svg" alt="" className="h-8 w-8" width="32" height="32" />
           Wade Vantage
         </a>
 
