@@ -35,7 +35,7 @@ export default function MagneticButton({ as: Tag = 'button', className, children
       animate={{ x: offset.x, y: offset.y }}
       transition={{ type: 'spring', stiffness: 200, damping: 15, mass: 0.3 }}
       className={cn(
-        'inline-flex cursor-pointer items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-colors duration-200',
+        'inline-flex cursor-pointer items-center justify-center gap-2 rounded px-6 py-3 text-sm font-semibold transition',
         className
       )}
       {...props}

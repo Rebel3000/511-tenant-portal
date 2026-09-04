@@ -1,65 +1,32 @@
-import { Github, Linkedin, Twitter } from 'lucide-react'
-import { footerLinks } from '../../data/content'
-
-const social = [
-  { icon: Twitter, href: '#', label: 'Twitter' },
-  { icon: Linkedin, href: '#', label: 'LinkedIn' },
-  { icon: Github, href: '#', label: 'GitHub' },
-]
+import { nav } from '../../data/content'
 
 export default function Footer() {
   return (
-    <footer className="border-t border-surface-border bg-surface-card">
-      <div className="mx-auto max-w-7xl px-6 py-16 lg:px-8">
-        <div className="grid grid-cols-2 gap-10 md:grid-cols-5">
-          <div className="col-span-2">
-            <a href="#top" className="flex items-center gap-2.5 text-lg font-extrabold tracking-tight text-ink">
+    <footer className="border-t border-border bg-white">
+      <div className="mx-auto max-w-6xl px-6 py-section lg:px-8">
+        <div className="flex flex-col gap-10 sm:flex-row sm:items-start sm:justify-between">
+          <div>
+            <a href="#top" className="flex items-center gap-2.5 font-mono text-sm font-medium text-black">
               <img src="/logo-mark.svg" alt="" className="h-8 w-8" width="32" height="32" />
-              Wade Vantage
+              WADE VENTURES
             </a>
-            <p className="mt-4 max-w-xs text-sm leading-relaxed text-ink-faint">
-              Operations intelligence for growing teams — automate the busywork, act on what matters.
+            <p className="mt-4 max-w-xs text-sm leading-relaxed text-muted">
+              Capital for the bold. We partner with early-stage founders to build category-defining businesses.
             </p>
-            <div className="mt-6 flex gap-3">
-              {social.map(({ icon: Icon, href, label }) => (
-                <a
-                  key={label}
-                  href={href}
-                  aria-label={label}
-                  className="flex h-10 w-10 items-center justify-center rounded-full border border-surface-border text-ink-soft transition-colors hover:border-primary hover:text-primary"
-                >
-                  <Icon size={18} />
-                </a>
-              ))}
-            </div>
           </div>
 
-          {Object.entries(footerLinks).map(([heading, links]) => (
-            <div key={heading}>
-              <h3 className="text-sm font-semibold text-ink">{heading}</h3>
-              <ul className="mt-4 space-y-3">
-                {links.map((link) => (
-                  <li key={link.label}>
-                    <a href={link.href} className="text-sm text-ink-faint transition-colors hover:text-primary">
-                      {link.label}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+          <div className="flex gap-8">
+            {nav.map((item) => (
+              <a key={item.label} href={item.href} className="text-sm text-black transition hover:text-venture">
+                {item.label}
+              </a>
+            ))}
+          </div>
         </div>
 
-        <div className="mt-14 flex flex-col items-center justify-between gap-4 border-t border-surface-border pt-8 text-sm text-ink-faint md:flex-row">
-          <p>© {new Date().getFullYear()} Wade Vantage, Inc. All rights reserved.</p>
-          <div className="flex gap-6">
-            <a href="#" className="hover:text-primary">
-              Privacy
-            </a>
-            <a href="#" className="hover:text-primary">
-              Terms
-            </a>
-          </div>
+        <div className="mt-14 flex flex-col items-start justify-between gap-3 border-t border-border pt-6 font-mono text-xs uppercase tracking-wide text-muted sm:flex-row sm:items-center">
+          <span>Edition 01</span>
+          <span>© {new Date().getFullYear()} Wade Ventures</span>
         </div>
       </div>
     </footer>

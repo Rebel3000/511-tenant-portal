@@ -7,11 +7,11 @@ html {
 }
 
 body {
-  @apply bg-surface text-ink font-sans antialiased;
+  @apply bg-white text-black font-sans antialiased;
 }
 
 ::selection {
-  @apply bg-primary/20 text-primary-dim;
+  @apply bg-venture/20 text-black;
 }
 
 @media (prefers-reduced-motion: reduce) {
