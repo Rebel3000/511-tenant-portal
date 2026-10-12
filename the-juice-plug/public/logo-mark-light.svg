@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" role="img" aria-label="The Juice Plug">
+  <rect x="17" y="4" width="5" height="14" rx="2" fill="#FFFBF5"/>
+  <rect x="26" y="4" width="5" height="14" rx="2" fill="#FFFBF5"/>
+  <circle cx="24" cy="30" r="15" fill="#F97316"/>
+  <path d="M24 18 L24 42 M11 30 L37 30 M16 21 L32 39 M32 21 L16 39" stroke="#FFEDD5" stroke-width="1.6" stroke-linecap="round"/>
+</svg>

@@ -1,0 +1,302 @@
+/* Naturecore + Measured Terrarium hero styles */
+
+.hero-nav-pill {
+  position: absolute;
+  top: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  padding: 6px 8px;
+  border-radius: 40px;
+  z-index: 100;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.hero-nav-pill .close-icon {
+  width: 28px;
+  height: 28px;
+  background: #1a1a1a;
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: none;
+}
+
+.hero-nav-menu {
+  display: flex;
+  list-style: none;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+}
+
+.hero-nav-menu a {
+  text-decoration: none;
+  color: #1a1a1a;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 8px 16px;
+  border-radius: 20px;
+  transition: background 0.2s;
+  letter-spacing: 0.5px;
+  display: inline-block;
+}
+
+.hero-nav-menu a.active,
+.hero-nav-menu a:hover {
+  background: rgba(0, 0, 0, 0.08);
+}
+
+/* Naturecore */
+.naturecore-hero {
+  background: url('https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?auto=format&fit=crop&w=1920&q=80')
+    center/cover no-repeat;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  height: 100vh;
+}
+
+.bg-typography {
+  position: absolute;
+  bottom: 60px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  text-align: center;
+  font-family: 'Cinzel', serif;
+  font-size: clamp(3rem, 9vw, 8.5rem);
+  font-weight: 900;
+  line-height: 0.95;
+  letter-spacing: -1px;
+  color: #ffffff;
+  text-transform: uppercase;
+  text-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  pointer-events: none;
+  z-index: 10;
+  margin: 0;
+}
+
+.overlay-card-position {
+  position: absolute;
+  top: 52%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  max-width: 680px;
+  z-index: 20;
+}
+
+.overlay-card {
+  background: rgba(38, 48, 36, 0.88);
+  backdrop-filter: blur(16px);
+  border-radius: 16px;
+  padding: 48px 40px 32px 40px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  text-align: center;
+}
+
+.overlay-card .subtitle {
+  font-size: 11px;
+  font-style: italic;
+  color: #a3b899;
+  margin-bottom: 20px;
+  font-family: 'Playfair Display', serif;
+}
+
+.overlay-card h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.8rem, 3.5vw, 2.75rem);
+  font-weight: 400;
+  line-height: 1.3;
+  color: #f0f4ee;
+  margin: 0;
+}
+
+.overlay-card h2 em {
+  font-style: italic;
+  font-weight: 400;
+  color: #ffffff;
+}
+
+.trust-marks {
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+  opacity: 0.75;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: #d7e2d2;
+}
+
+/* Measured Terrarium */
+.measured-hero {
+  background: radial-gradient(circle at center, #1b261d 0%, #080c09 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  height: 100vh;
+}
+
+.measured-nav {
+  position: absolute;
+  top: 30px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 30;
+}
+
+.measured-nav-links {
+  display: flex;
+  gap: 28px;
+  list-style: none;
+  background: rgba(0, 0, 0, 0.4);
+  padding: 8px 24px;
+  border-radius: 30px;
+  backdrop-filter: blur(8px);
+  margin: 0;
+}
+
+.measured-nav-links a {
+  color: #a0aab0;
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.measured-nav-links a:hover {
+  color: #ffffff;
+}
+
+.reserve-btn {
+  position: absolute;
+  right: 40px;
+  background: #ffffff;
+  color: #000000;
+  border: none;
+  padding: 8px 18px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.measured-title {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(4rem, 14vw, 13rem);
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: #e5ece8;
+  text-align: center;
+  position: absolute;
+  top: 18%;
+  width: 100%;
+  z-index: 1;
+  line-height: 1;
+  margin: 0;
+}
+
+.terrarium-container {
+  position: relative;
+  z-index: 10;
+  margin-top: 100px;
+  width: 380px;
+  height: 380px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.05) 60%, rgba(0, 0, 0, 0.4));
+  box-shadow: inset 0 0 30px rgba(255, 255, 255, 0.3), inset -10px -10px 20px rgba(0, 0, 0, 0.7),
+    0 30px 60px rgba(0, 0, 0, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  backdrop-filter: blur(2px);
+}
+
+.terrarium-inner {
+  width: 88%;
+  height: 88%;
+  border-radius: 50%;
+  background: url('https://images.unsplash.com/photo-1534710961216-75c88202f43e?auto=format&fit=crop&w=800&q=80')
+    center/cover no-repeat;
+  filter: contrast(1.1) brightness(0.95);
+  position: relative;
+}
+
+.terrarium-container::after {
+  content: '';
+  position: absolute;
+  top: 12%;
+  left: 15%;
+  width: 70px;
+  height: 35px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.35);
+  transform: rotate(-30deg);
+  filter: blur(4px);
+}
+
+.moss-bed {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 250px;
+  background: linear-gradient(to top, rgba(5, 10, 6, 0.95), transparent),
+    url('https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?auto=format&fit=crop&w=1200&q=80') center/cover;
+  opacity: 0.7;
+  z-index: 5;
+}
+
+/* View switcher */
+.view-switcher {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+  display: flex;
+  gap: 10px;
+  background: rgba(0, 0, 0, 0.75);
+  padding: 8px;
+  border-radius: 30px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.view-btn {
+  background: transparent;
+  border: none;
+  color: #ccc;
+  padding: 8px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.view-btn.active,
+.view-btn:hover {
+  background: #ffffff;
+  color: #000000;
+}
