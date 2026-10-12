@@ -4,9 +4,9 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        heading: ['Instrument Serif', 'serif'],
-        body: ['Barlow', 'sans-serif'],
-        dirtyline: ['Dirtyline', 'sans-serif'],
+        heading: ['Cinzel', 'serif'],
+        display: ['Playfair Display', 'serif'],
+        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
       },
       borderRadius: { DEFAULT: '9999px' },
     },
